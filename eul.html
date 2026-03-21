@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EUL — live generative streams, always on, never the same.">
+  <meta property="og:title" content="EUL">
+  <meta property="og:description" content="Live generative streams, always on, never the same.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="eul.css">
+  <title>EUL</title>
+</head>
+<body class="eul-page">
+
+  <header>
+    <nav>
+      <a href="index.html">Demea</a>
+    </nav>
+  </header>
+
+  <main class="eul-main">
+    <div class="eul-inner">
+      <p class="eul-label">EUL</p>
+      <p class="eul-desc">Live generative streams — always on, never the same.</p>
+      <audio id="radio-stream" preload="none">
+        <source src="https://music.demea.xyz/stream" type="audio/mpeg">
+      </audio>
+      <button id="radio-btn" class="radio-btn">tune in</button>
+      <p class="eul-credit">A <a href="index.html">Demea</a> transmission</p>
+    </div>
+  </main>
+
+  <script src="eul.js"></script>
+</body>
+</html>

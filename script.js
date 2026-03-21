@@ -32,18 +32,3 @@ const observer = new IntersectionObserver(
 )
 
 sections.forEach((section) => observer.observe(section))
-
-// Radio player — toggle play/stop on button click
-const radioStream = document.getElementById('radio-stream')
-const radioBtn = document.getElementById('radio-btn')
-
-radioBtn.addEventListener('click', () => {
-  if (radioStream.paused) {
-    radioStream.play()
-    radioBtn.textContent = 'stop'
-  } else {
-    radioStream.pause()
-    radioStream.load()  // reset stream so next play fetches fresh
-    radioBtn.textContent = 'tune in'
-  }
-})

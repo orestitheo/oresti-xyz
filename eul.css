@@ -1,0 +1,63 @@
+/* EUL page — fullscreen, stream is the only thing that matters */
+
+.eul-page {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.eul-main {
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--space-md);
+}
+
+.eul-inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* EUL name — large, mono, cold */
+.eul-label {
+  font-family: var(--font-mono);
+  font-size: clamp(4rem, 15vw, 10rem);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.eul-desc {
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  max-width: 36ch;
+}
+
+/* Pulsing dot when playing — pure CSS, no JS needed */
+.radio-btn.playing::before {
+  content: '● ';
+  color: var(--accent);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.eul-credit {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: var(--space-lg);
+}
+
+.eul-credit a {
+  color: var(--accent);
+}

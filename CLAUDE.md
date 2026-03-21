@@ -30,3 +30,9 @@ Hosted on GitHub Pages. Domain: oresti.xyz. Previously registered via Squarespac
 - Nothing that looks like a template
 - Don't over-engineer
 - Nail structure and aesthetic before filling real content
+
+## Teaching mode
+I'm a SW engineer but not a frontend specialist. While building this, briefly explain 
+key CSS and JS decisions as you make them — one or two lines max, inline comments in 
+the code itself. Don't over-explain, don't be patronizing. Just enough that I 
+understand why, not just what.

@@ -118,6 +118,11 @@ section {
   padding-inline: var(--space-md);
 }
 
+/* Music section gets more room for side-by-side players */
+#music {
+  max-width: 1100px;
+}
+
 /* Hero breaks out of the max-width constraint to bleed full-width */
 #hero {
   max-width: 100%;
@@ -248,8 +253,13 @@ h1 {
 
 .players {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;   /* side by side on desktop */
   gap: var(--space-md);
+  align-items: stretch;
+}
+
+.player {
+  flex: 1;  /* each player takes equal width */
 }
 
 .player {
@@ -260,9 +270,15 @@ h1 {
   overflow: hidden;
 }
 
-/* SoundCloud injects a white bg by default — clip it */
+/* SoundCloud injects a white bg — shift it up to hide the white header bar */
+.player--soundcloud {
+  overflow: hidden;
+}
+
 .player--soundcloud iframe {
   display: block;
+  margin-top: -2px;
+  filter: brightness(0.92);  /* tones down the bright white slightly */
 }
 
 
@@ -381,6 +397,11 @@ footer p {
   :root {
     --space-xl: 5rem;
     --space-lg: 2.5rem;
+  }
+
+  /* Stack players on mobile */
+  .players {
+    flex-direction: column;
   }
 
   /* Reduce nav gap, keep items readable */

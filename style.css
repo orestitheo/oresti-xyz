@@ -331,7 +331,44 @@ h1 {
 
 
 /* =============================================================================
-   10. Links
+   10. Radio
+   ============================================================================= */
+
+#radio {
+  padding-block: var(--space-lg);  /* less vertical breathing room than other sections */
+}
+
+.radio-desc {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-md);
+}
+
+.radio-btn {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 0;        /* kill browser default rounding */
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;  /* kill browser default button styles on Safari */
+  appearance: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.radio-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+
+/* =============================================================================
+   12. Links
    ============================================================================= */
 
 #links ul {

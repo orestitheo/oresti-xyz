@@ -2,7 +2,7 @@
 
 ## Project
 Static personal portfolio for Oresti, experimental electronic musician based in Malmö, Sweden.
-Hosted on GitHub Pages. Domain: oresti.xyz
+Hosted on GitHub Pages. Domain: oresti.xyz. Previously registered via Squarespace (registrar only, nothing hosted there).
 
 ## Stack
 - Vanilla HTML/CSS/JS only
@@ -10,15 +10,11 @@ Hosted on GitHub Pages. Domain: oresti.xyz
 - Three files: index.html, style.css, script.js
 
 ## Aesthetic
-- Dark, minimal, cinematic
-- Think Burial record sleeve — not a music blog, not a Spotify page
-- Black or near-black background, muted desaturated palette
-- Subtle slow generative/animated background element
+- Dark, minimal, clean
+- Artist will provide own artwork — build around it when supplied
 - Typography: considered, not generic. Google Fonts ok.
-- No stock photography, no bright colors, no gradients
-
-## Sound references
-Future Sound of London, Burial, Massive Attack, SHXCXCHCXSH
+- No stock photography, no bright colors, no heavy gradients
+- Less is more — let content breathe
 
 ## Sections
 - Hero: name + minimal tagline
@@ -33,4 +29,4 @@ Future Sound of London, Burial, Massive Attack, SHXCXCHCXSH
 - Anonymous feel, no face photos
 - Nothing that looks like a template
 - Don't over-engineer
-- Nail aesthetic before filling real content
+- Nail structure and aesthetic before filling real content

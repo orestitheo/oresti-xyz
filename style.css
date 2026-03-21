@@ -30,7 +30,7 @@
 
   /* Artwork hooks — set these when artwork is ready, cost nothing until then */
   --noise-texture: none;
-  --hero-bg:       none;
+  --hero-bg:       url('IMG_0286.PNG');
 }
 
 
@@ -186,13 +186,24 @@ nav a[aria-current='page'] {
   min-height: 100svh;             /* svh = small viewport height, handles mobile chrome bar */
   display: flex;
   align-items: center;
-  /* Artwork hook: set --hero-bg to an image url() when ready */
   background-image: var(--hero-bg);
   background-size: cover;
   background-position: center;
 }
 
+/* Dark overlay so text stays readable over the artwork */
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 12, 0.6);
+  pointer-events: none;
+}
+
+/* Keep text above the overlay */
 .hero-inner {
+  position: relative;
+  z-index: 1;
   max-width: var(--max-width);
   margin-inline: auto;
   padding-inline: var(--space-md);

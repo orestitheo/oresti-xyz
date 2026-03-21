@@ -4,12 +4,12 @@
 
 :root {
   /* Color */
-  --bg:           #0a0a0a;
-  --surface:      #111111;
-  --border:       #1e1e1e;
-  --text:         #d4d4d4;
-  --text-muted:   #5a5a5a;
-  --accent:       #c8b89a;   /* warm sand */
+  --bg:           #080c0c;   /* near-black with cold tint */
+  --surface:      #0d1414;   /* dark cyan-tinted surface */
+  --border:       #162020;   /* cold dark border */
+  --text:         #c8d8d8;   /* slightly cyan-tinted white */
+  --text-muted:   #3a5050;   /* muted cyan-grey */
+  --accent:       #4dd9d9;   /* cold cyan */
 
   /* Typography */
   --font-body:    'Space Grotesk', sans-serif;
@@ -91,7 +91,7 @@ a {
    ============================================================================= */
 
 h1, h2, h3 {
-  font-family: var(--font-body);
+  font-family: var(--font-mono);  /* monospace throughout for cold/digital feel */
   line-height: 1.1;
 }
 
@@ -201,8 +201,8 @@ nav a[aria-current='page'] {
 
 h1 {
   font-size: var(--size-hero);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 400;             /* mono bold looks heavy — 400 reads cleaner */
+  letter-spacing: 0.05em;
   color: var(--text);
   margin-bottom: var(--space-sm);
 }

@@ -253,6 +253,12 @@ h1 {
   max-width: 42ch;
 }
 
+.music-intro {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
 .hero-eul-btn {
   margin-top: var(--space-lg);
   display: inline-block;

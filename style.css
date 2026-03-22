@@ -246,6 +246,13 @@ h1 {
   color: var(--text);  /* full brightness over artwork */
 }
 
+.hero-bio {
+  font-size: 0.875rem;
+  color: var(--text);
+  margin-top: var(--space-sm);
+  max-width: 42ch;
+}
+
 .hero-eul-btn {
   margin-top: var(--space-lg);
   display: inline-block;

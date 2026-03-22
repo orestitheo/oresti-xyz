@@ -246,6 +246,11 @@ h1 {
   color: var(--text);  /* full brightness over artwork */
 }
 
+.hero-eul-btn {
+  margin-top: var(--space-lg);
+  display: inline-block;
+}
+
 
 /* =============================================================================
    7. Music / players

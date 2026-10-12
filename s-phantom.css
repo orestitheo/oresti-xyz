@@ -1,18 +1,12 @@
-/* S-PHANTOM page — reuses the EUL layout, adds a fullscreen canvas behind it */
+/* S-PHANTOM page — reuses the EUL layout, with the canvas as a framed screen between the texts */
 
+/* Width is the smallest of: 90% of the viewport, 720px, or whatever still lets
+   the whole 4:3 screen plus the text fit in the viewport height (~22rem of text + button) */
 #sp {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;          /* keep the pattern behind the text, not on top of it */
+  width: min(90vw, 720px, calc((100dvh - 22rem) * 4 / 3));
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--border);
   image-rendering: pixelated;   /* canvas is low-res; scale it up with hard edges, not blur */
-  pointer-events: none;
-}
-
-/* Text sits above the canvas (fixed elements stack over static ones otherwise) */
-.eul-main {
-  position: relative;
 }
 
 /* Live effect intensities — the "genes" of the glitch */

@@ -23,13 +23,16 @@
     </nav>
   </header>
 
-  <canvas id="sp" aria-hidden="true"></canvas>
-
   <main class="eul-main">
     <div class="eul-inner">
       <p class="eul-label">S-PHANTOM</p>
-      <p class="eul-desc">S-PHANTOM is a glitch engine. It mutates.</p>
+      <canvas id="sp" aria-hidden="true"></canvas>
+      <p class="eul-desc">S-PHANTOM is a glitch engine. It mutates. Tune in to EUL and it listens.</p>
       <p id="sp-genes" class="sp-genes"></p>
+      <audio id="sp-stream" crossorigin="anonymous" preload="none">
+        <source src="https://music.demea.xyz/stream" type="audio/mpeg">
+      </audio>
+      <button id="sp-btn" class="radio-btn">tune in</button>
     </div>
   </main>
 

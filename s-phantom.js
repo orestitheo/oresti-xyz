@@ -5,6 +5,8 @@
 // To add your own effect: write a function ({ px, w, h, amt, prev }) that edits `px` in place,
 // and add it to EFFECTS. `px` is a Uint32Array, one number per pixel (0xAABBGGRR, little-endian),
 // `amt` is its current gene, `prev` is last frame's output.
+// `react` decides how the EUL stream pushes the effect: it gets { bass, mid, high, level }, all 0..1,
+// and returns an amount added on top of the gene. bass/mid/high are hits (jumps above their recent average).
 
 const SCALE = 3                 // render at 1/3 resolution, CSS scales it up with hard pixels
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -13,6 +15,8 @@ const FRAME_MS = reducedMotion ? 500 : 1000 / 30
 const canvas = document.getElementById('sp')
 const ctx = canvas.getContext('2d', { willReadFrequently: true })   // hint: we read pixels back every frame
 const genesEl = document.getElementById('sp-genes')
+const stream = document.getElementById('sp-stream')
+const btn = document.getElementById('sp-btn')
 
 // Read colours from the site's CSS variables so the canvas follows the theme
 const css = getComputedStyle(document.documentElement)
@@ -88,10 +92,10 @@ function sliceShift({ px, w, h, amt }) {
 
 // Order matters: each effect sees the output of the one before it
 const EFFECTS = [
-  { name: 'sort', fn: pixelSort },
-  { name: 'mosh', fn: mosh },
-  { name: 'rgb', fn: rgbSplit },
-  { name: 'slice', fn: sliceShift },
+  { name: 'sort', fn: pixelSort, react: (a) => a.level * 0.5 },
+  { name: 'mosh', fn: mosh, react: (a) => a.bass * 1.5 },
+  { name: 'rgb', fn: rgbSplit, react: (a) => a.high * 2 },
+  { name: 'slice', fn: sliceShift, react: (a) => a.bass + a.mid },
 ]
 
 
@@ -114,14 +118,61 @@ function drawSource(t) {
 }
 
 
+/* ---- Audio ------------------------------------------------------------ */
+
+// The EUL stream sends Access-Control-Allow-Origin: *, which (with crossorigin on the <audio>)
+// lets us read its samples. Without that header the browser would play it but give us silence.
+let analyser, bins
+const avg = [0, 0, 0]
+const SILENT = { bass: 0, mid: 0, high: 0, level: 0 }
+
+// Average loudness of a range of frequency bins, 0..1
+const band = (from, to) => bins.subarray(from, to).reduce((a, b) => a + b, 0) / (to - from) / 255
+
+function listen() {
+  if (!analyser || stream.paused) return SILENT
+  analyser.getByteFrequencyData(bins)
+  // fftSize 256 at ~44.1kHz gives 128 bins of ~170Hz each
+  const levels = [band(0, 3), band(3, 30), band(30, 100)]
+  // Compare each band to its slow-moving average, so we react to hits, not to constant bass
+  const hits = levels.map((l, i) => {
+    avg[i] += (l - avg[i]) * 0.05
+    return Math.min(1, Math.max(0, l - avg[i]) * 4)
+  })
+  return { bass: hits[0], mid: hits[1], high: hits[2], level: band(0, 100) }
+}
+
+btn.addEventListener('click', () => {
+  if (stream.paused) {
+    // Audio graph can only be created after a click (browser autoplay rules)
+    if (!analyser) {
+      const ac = new AudioContext()
+      analyser = ac.createAnalyser()
+      analyser.fftSize = 256
+      bins = new Uint8Array(analyser.frequencyBinCount)
+      ac.createMediaElementSource(stream).connect(analyser).connect(ac.destination)
+    }
+    analyser.context.resume()
+    stream.play()
+    btn.textContent = 'stop'
+    btn.classList.add('playing')
+  } else {
+    stream.pause()
+    stream.load()   // drop the buffer so the next play is live, not where we left off
+    btn.textContent = 'tune in'
+    btn.classList.remove('playing')
+  }
+})
+
+
 /* ---- Engine ----------------------------------------------------------- */
 
 let genes = EFFECTS.map(() => Math.random() * 0.5)
 let prev, last = 0, frame = 0
 
 function resize() {
-  canvas.width = Math.ceil(innerWidth / SCALE)
-  canvas.height = Math.ceil(innerHeight / SCALE)
+  canvas.width = Math.ceil(canvas.clientWidth / SCALE)    // size of the on-page screen, set by CSS
+  canvas.height = Math.ceil(canvas.clientHeight / SCALE)
   prev = new Uint32Array(canvas.width * canvas.height)
 }
 
@@ -137,15 +188,17 @@ function loop(t) {
   last = t
 
   evolve()
+  const a = listen()
+  const amts = EFFECTS.map(({ react }, i) => Math.min(1, genes[i] + react(a)))
   drawSource(t)
   const img = ctx.getImageData(0, 0, canvas.width, canvas.height)
   const px = new Uint32Array(img.data.buffer)   // same memory, viewed as one number per pixel
-  EFFECTS.forEach(({ fn }, i) => fn({ px, w: canvas.width, h: canvas.height, amt: genes[i], prev }))
+  EFFECTS.forEach(({ fn }, i) => fn({ px, w: canvas.width, h: canvas.height, amt: amts[i], prev }))
   ctx.putImageData(img, 0, 0)
   prev.set(px)
 
   if (frame++ % 10 === 0) {
-    genesEl.textContent = EFFECTS.map(({ name }, i) => `${name} ${genes[i].toFixed(2).slice(1)}`).join(' · ')
+    genesEl.textContent = EFFECTS.map(({ name }, i) => `${name} ${amts[i].toFixed(2)}`).join(' · ')
   }
 }
 

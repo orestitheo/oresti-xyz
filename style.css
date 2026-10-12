@@ -4,19 +4,19 @@
 
 :root {
   /* Color */
-  --bg:           #080c0c;   /* near-black with cold tint */
-  --surface:      #0d1414;   /* dark cyan-tinted surface */
-  --border:       #162020;   /* cold dark border */
-  --text:         #c8d8d8;   /* slightly cyan-tinted white */
-  --text-muted:   #3a5050;   /* muted cyan-grey */
-  --accent:       #4dd9d9;   /* cold cyan */
+  --bg:           #080808;
+  --surface:      #111111;
+  --border:       #222222;
+  --text:         #d8d8d8;
+  --text-muted:   #444444;
+  --accent:       #ffffff;
 
   /* Typography */
-  --font-body:    'Space Grotesk', sans-serif;
+  --font-body:    'Space Mono', monospace;   /* mono everywhere, matches S-PHANTOM */
   --font-mono:    'Space Mono', monospace;
 
   /* Scale */
-  --size-hero:    clamp(2.5rem, 8vw, 5rem);
+  --size-hero:    clamp(4rem, 14vw, 10rem);
 
   /* Layout */
   --max-width:    720px;
@@ -190,12 +190,19 @@ nav a[aria-current='page'] {
   min-height: 100svh;             /* svh = small viewport height, handles mobile chrome bar */
   display: flex;
   align-items: center;
-  /* Logo sits behind the glitch art as a ghost watermark.
-     CSS allows multiple backgrounds — first listed = on top. */
+}
+
+/* Background image lives on ::after so we can filter it without affecting children */
+#hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   background-image: var(--hero-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  filter: grayscale(1);
+  z-index: 0;
 }
 
 /* Logo ghost — sits to the right of the hero text */
@@ -208,8 +215,9 @@ nav a[aria-current='page'] {
   height: auto;
   opacity: 0.4;
   mix-blend-mode: screen;  /* treats black as transparent, only bright parts show */
+  filter: grayscale(1);
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Dark overlay so text stays readable over the artwork */
@@ -217,14 +225,15 @@ nav a[aria-current='page'] {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(8, 12, 12, 0.75);
+  background: rgba(8, 8, 8, 0.72);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* Keep text above the overlay and logo ghost */
 .hero-inner {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   max-width: var(--max-width);
   margin-inline: auto;
   padding-inline: var(--space-md);

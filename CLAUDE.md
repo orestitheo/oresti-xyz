@@ -12,7 +12,7 @@ GitHub repo: github.com/orestitheo/oresti-xyz — remote via SSH: git@github.com
 
 ## Aesthetic
 - Dark, minimal, cold — near-black with cyan tones (#080c0c bg, #4dd9d9 accent)
-- Typography: Space Grotesk (body) + Space Mono (headings, dates, mono elements)
+- Typography: Space Mono everywhere
 - Glitch art aesthetic — artist has provided artwork (IMG_0286.PNG, IMG_0287.PNG, IMG_1926.jpg)
 - Less is more — let content breathe
 - Tone: not serious, playful but not loud

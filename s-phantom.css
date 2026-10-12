@@ -1,0 +1,29 @@
+/* S-PHANTOM page — reuses the EUL layout, adds a fullscreen canvas behind it */
+
+#sp {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;          /* keep the pattern behind the text, not on top of it */
+  image-rendering: pixelated;   /* canvas is low-res; scale it up with hard edges, not blur */
+  pointer-events: none;
+}
+
+/* Text sits above the canvas (fixed elements stack over static ones otherwise) */
+.eul-main {
+  position: relative;
+}
+
+/* Live effect intensities — the "genes" of the glitch */
+.sp-genes {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-height: 1em;
+}
+
+/* Longer name than EUL — scale it down so it fits on phones */
+.eul-label {
+  font-size: clamp(2rem, 9vw, 6rem);
+}

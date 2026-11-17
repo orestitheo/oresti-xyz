@@ -132,6 +132,12 @@ section + section {
   border: 1px solid var(--border);
 }
 
+/* inline-block so the margin applies (links are inline by default) */
+.sampler-link {
+  display: inline-block;
+  margin-top: var(--space-md);
+}
+
 /* Hero breaks out of the max-width constraint to bleed full-width */
 #hero {
   max-width: 100%;

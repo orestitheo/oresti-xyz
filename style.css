@@ -4,11 +4,11 @@
 
 :root {
   /* Color */
-  --bg:           #080808;
-  --surface:      #111111;
-  --border:       #222222;
-  --text:         #d8d8d8;
-  --text-muted:   #444444;
+  --bg:           #000000;   /* pure black, like Mensis */
+  --surface:      #000000;
+  --border:       #333333;
+  --text:         #ffffff;
+  --text-muted:   #8a8a8a;   /* light enough to read on black */
   --accent:       #ffffff;
 
   /* Typography */
@@ -16,10 +16,10 @@
   --font-mono:    'Space Mono', monospace;
 
   /* Scale */
-  --size-hero:    clamp(4rem, 14vw, 10rem);
+  --size-hero:    clamp(2.25rem, 11vw, 7rem);   /* smaller than before: wide letter-spacing makes it long */
 
   /* Layout */
-  --max-width:    720px;
+  --max-width:    1100px;
   --space-xl:     8rem;
   --space-lg:     4rem;
   --space-md:     2rem;
@@ -30,7 +30,6 @@
 
   /* Artwork hooks — set these when artwork is ready, cost nothing until then */
   --noise-texture: none;
-  --hero-bg:       url('IMG_0286.PNG');
 }
 
 
@@ -97,12 +96,14 @@ h1, h2, h3 {
 
 /* Section labels — understated, not dominant */
 h2 {
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.15em;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;   /* the spaced-out "S C E N E S" look */
   text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: var(--space-lg);
+  color: var(--text);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-md);
 }
 
 
@@ -118,9 +119,17 @@ section {
   padding-inline: var(--space-md);
 }
 
-/* Music section gets more room for side-by-side players */
-#music {
-  max-width: 1100px;
+/* + selects only sections that follow another section, so the hero gets no top line */
+section + section {
+  border-top: 1px solid var(--border);
+}
+
+/* Sampler screenshot fills the section; width/height attrs in HTML stop layout jump while it loads */
+.sampler-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
 }
 
 /* Hero breaks out of the max-width constraint to bleed full-width */
@@ -143,7 +152,7 @@ header {
   padding: var(--space-sm) var(--space-md);
   /* Subtle border without a heavy bar */
   border-bottom: 1px solid var(--border);
-  background-color: rgba(10, 10, 10, 0.92);
+  background-color: rgba(0, 0, 0, 0.92);
   /* Frosted-glass blur for depth without a hard edge */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -151,32 +160,39 @@ header {
 
 nav {
   display: flex;
+  flex-wrap: wrap;   /* tabs drop to a second row on narrow screens instead of overflowing */
   align-items: center;
-  gap: var(--space-md);
+  gap: 0.5rem;
   max-width: var(--max-width);
   margin-inline: auto;
 }
 
 nav a {
-  font-size: 0.8125rem;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  transition: color var(--transition);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  border: 1px solid var(--text-muted);
+  padding: 0.3rem 0.9rem;
+  transition: background var(--transition), color var(--transition);
 }
 
+/* Wordmark, not a tab: spaced like "M E N S I S" */
 nav a:first-child {
-  color: var(--text);
-  font-weight: 700;
+  border: none;
+  padding-inline: 0;
+  font-size: 1rem;
+  letter-spacing: 0.4em;
   margin-right: auto;
 }
 
-nav a:hover {
-  color: var(--text);
-}
-
-/* Active section — set by IntersectionObserver in script.js */
-nav a[aria-current='page'] {
-  color: var(--accent);
+/* Hover and active tab invert, like the selected LOOP tab */
+nav a:not(:first-child):hover,
+nav a:not(:first-child)[aria-current='page'] {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 }
 
 
@@ -190,19 +206,6 @@ nav a[aria-current='page'] {
   min-height: 100svh;             /* svh = small viewport height, handles mobile chrome bar */
   display: flex;
   align-items: center;
-}
-
-/* Background image lives on ::after so we can filter it without affecting children */
-#hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: var(--hero-bg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: grayscale(1);
-  z-index: 0;
 }
 
 /* Logo ghost — sits to the right of the hero text */
@@ -220,16 +223,6 @@ nav a[aria-current='page'] {
   z-index: 2;
 }
 
-/* Dark overlay so text stays readable over the artwork */
-#hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(8, 8, 8, 0.72);
-  pointer-events: none;
-  z-index: 1;
-}
-
 /* Keep text above the overlay and logo ghost */
 .hero-inner {
   position: relative;
@@ -242,8 +235,9 @@ nav a[aria-current='page'] {
 
 h1 {
   font-size: var(--size-hero);
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
   color: var(--text);
   margin-bottom: var(--space-sm);
 }
@@ -252,7 +246,7 @@ h1 {
   font-size: 0.875rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text);  /* full brightness over artwork */
+  color: var(--text-muted);   /* grey subtitle, like "SAMPLER" under "MENSIS" */
 }
 
 .hero-bio {
@@ -265,11 +259,13 @@ h1 {
 .music-intro {
   font-size: 0.875rem;
   color: var(--text-muted);
+  max-width: 60ch;   /* keep text lines readable now that sections are wide */
   margin-bottom: var(--space-md);
 }
 
 .hero-eul-btn {
   margin-top: var(--space-lg);
+  margin-right: 0.5rem;
   display: inline-block;
 }
 
@@ -292,8 +288,6 @@ h1 {
 .player {
   background-color: var(--surface);
   border: 1px solid var(--border);
-  /* Slight rounding — not card-ish, just softens the hard rectangle */
-  border-radius: 2px;
   overflow: hidden;
 }
 
@@ -374,8 +368,9 @@ h1 {
 .radio-btn {
   font-family: var(--font-mono);
   font-size: 0.875rem;
+  font-weight: 700;
   letter-spacing: 0.1em;
-  text-transform: lowercase;
+  text-transform: uppercase;
   color: var(--accent);
   background: none;
   border: 1px solid var(--accent);
@@ -400,37 +395,24 @@ h1 {
 
 #links ul {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 #links a {
   display: inline-block;
-  font-size: 0.9375rem;
-  padding-block: 0.375rem;
-  color: var(--text-muted);
-  transition: color var(--transition);
-  /* Underline grows from left on hover — cleaner than a box highlight */
-  position: relative;
-}
-
-#links a::after {
-  content: '';
-  position: absolute;
-  bottom: 0.25rem;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: var(--accent);
-  transition: width var(--transition);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--text);
+  padding: 0.6rem 1.5rem;
+  transition: background var(--transition), color var(--transition);
 }
 
 #links a:hover {
-  color: var(--accent);
-}
-
-#links a:hover::after {
-  width: 100%;
+  background: var(--text);
+  color: var(--bg);
 }
 
 
@@ -474,7 +456,8 @@ footer p {
   }
 
   nav a {
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
+    padding: 0.25rem 0.6rem;
   }
 
   /* Gig list: date above venue on small screens */
@@ -486,5 +469,13 @@ footer p {
 
   .gig-date {
     min-width: unset;
+  }
+
+  /* Logo moves below the text on phones so it doesn't sit on the tagline */
+  .hero-logo-bg {
+    top: 75%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    width: 160px;
   }
 }

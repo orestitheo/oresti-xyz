@@ -167,6 +167,7 @@ header {
 nav {
   display: flex;
   flex-wrap: wrap;   /* tabs drop to a second row on narrow screens instead of overflowing */
+  justify-content: flex-end;   /* tabs sit on the right */
   align-items: center;
   gap: 0.5rem;
   max-width: var(--max-width);
@@ -185,7 +186,7 @@ nav a {
 }
 
 /* Wordmark, not a tab: spaced like "M E N S I S" */
-nav a:first-child {
+nav a.wordmark {
   border: none;
   padding-inline: 0;
   font-size: 1rem;
@@ -194,8 +195,8 @@ nav a:first-child {
 }
 
 /* Hover and active tab invert, like the selected LOOP tab */
-nav a:not(:first-child):hover,
-nav a:not(:first-child)[aria-current='page'] {
+nav a:not(.wordmark):hover,
+nav a:not(.wordmark)[aria-current='page'] {
   background: var(--text);
   color: var(--bg);
   border-color: var(--text);
